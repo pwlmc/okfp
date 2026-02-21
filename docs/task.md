@@ -14,7 +14,7 @@ Think of it as a `() => Promise<T>` with a composable, functional interface.
 - **Composable** - chain, combine, and transform Tasks before executing.
 
 ```ts
-import { type Task, task, fromPromise } from "okfp/task";
+import { type Task, task, fromPromise } from "@okfp/okfp/task";
 
 // A Promise runs immediately:
 const eager = fetch("/api/users"); // request fires now

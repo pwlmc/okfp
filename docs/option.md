@@ -12,7 +12,7 @@ Nullable values (`null`, `undefined`) are a common source of runtime errors. The
 `Option` makes absence **explicit and type-safe**. You can't accidentally use a missing value - the compiler forces you to handle both cases.
 
 ```ts
-import { type Option, some, none } from "okfp/option";
+import { type Option, some, none } from "@okfp/okfp/option";
 
 // Without Option: null is ambiguous and easy to forget
 function unsafeGet(id: string): User | null { /* ... */ }
@@ -32,7 +32,7 @@ safeGet("123").match(
 ### Creating an Option
 
 ```ts
-import { some, none, fromNullable } from "okfp/option";
+import { some, none, fromNullable } from "@okfp/okfp/option";
 
 const hasValue = some(42);  // Some(42)
 const empty = none();       // None
@@ -43,7 +43,7 @@ const fromValue = fromNullable("hello"); // Some("hello")
 ### Transforming and Chaining
 
 ```ts
-import { type Option, some, none } from "okfp/option";
+import { type Option, some, none } from "@okfp/okfp/option";
 
 const parseNumber = (input: string): Option<number> => {
   const n = Number(input);
@@ -69,7 +69,7 @@ compute("abc"); // None (fails parsing)
 ### Extracting the Value
 
 ```ts
-import { type Option, some, none } from "okfp/option";
+import { type Option, some, none } from "@okfp/okfp/option";
 
 const x: Option<number> = some(42);
 x.getOrElse(() => 0); // 42

@@ -12,7 +12,7 @@ Throwing exceptions is the most common way to handle errors in JavaScript, but i
 `Either` makes errors **explicit and typed**. The caller always knows that a function can fail - and *how* it can fail - because the error type is right there in the signature.
 
 ```ts
-import { type Either, right, left } from "okfp/either";
+import { type Either, right, left } from "@okfp/okfp/either";
 
 // Without Either: throws, caller has no idea what can go wrong
 function unsafeParse(input: string): number { /* ... */ }
@@ -31,7 +31,7 @@ safeParse("abc").match(
 ### Creating an Either
 
 ```ts
-import { right, left, fromNullable, tryCatch } from "okfp/either";
+import { right, left, fromNullable, tryCatch } from "@okfp/okfp/either";
 
 const success = right(42);               // Right(42)
 const failure = left("something wrong");  // Left("something wrong")
@@ -45,7 +45,7 @@ const safe = tryCatch(
 ### Transforming and Chaining
 
 ```ts
-import { type Either, right, left } from "okfp/either";
+import { type Either, right, left } from "@okfp/okfp/either";
 
 const parseNumber = (input: string): Either<string, number> => {
   const n = Number(input);
@@ -68,7 +68,7 @@ compute("abc"); // Left("Not a number")
 ### Extracting the Value
 
 ```ts
-import { type Either, right, left } from "okfp/either";
+import { type Either, right, left } from "@okfp/okfp/either";
 
 const x: Either<string, number> = right(42);
 x.getOrElse(() => 0); // 42

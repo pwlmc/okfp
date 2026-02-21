@@ -1,6 +1,6 @@
 # OKFP
 
-![npm (scoped)](https://img.shields.io/npm/v/okfp?color=orange&label=npm) ![license](https://img.shields.io/badge/license-MIT-blue)
+![npm (scoped)](https://img.shields.io/npm/v/@okfp%2Fokfp?color=orange&label=npm) ![license](https://img.shields.io/badge/license-MIT-blue)
 
 > Essential typed effects for TypeScript.
 
@@ -22,10 +22,10 @@ See: [ROADMAP.md](./ROADMAP.md)
 Install with your package manager of choice:
 
 ```bash
-npm install okfp
+npm install @okfp/okfp
 # or
-# pnpm add okfp
-# yarn add okfp
+# pnpm add @okfp/okfp
+# yarn add @okfp/okfp
 ```
 
 ### Basic example
@@ -33,7 +33,7 @@ npm install okfp
 This example shows a small pipeline using `Option`.
 
 ```ts
-import { type Option, some, none } from "okfp/option";
+import { type Option, some, none } from "@okfp/okfp/option";
 
 const parseNumber = (input: string): Option<number> => {
   const n = Number(input);

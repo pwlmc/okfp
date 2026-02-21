@@ -16,8 +16,8 @@
 `Validation` **accumulates** all errors, making it ideal for form validation, config parsing, or any scenario where you want to report every problem at once instead of one at a time.
 
 ```ts
-import * as Either from "okfp/either";
-import * as Validation from "okfp/validation";
+import * as Either from "@okfp/okfp/either";
+import * as Validation from "@okfp/okfp/validation";
 
 // Either: stops at "Name is required"
 Either.map2(

@@ -1,5 +1,5 @@
 {
-  "name": "okfp",
+  "name": "@okfp/okfp",
   "version": "0.0.1",
   "description": "Essential typed effects for TypeScript.",
   "keywords": [

@@ -17,7 +17,7 @@ Most real-world async operations can fail: API calls, file reads, database queri
 - **Stay lazy** - nothing executes until you call `.run()`
 
 ```ts
-import { type TaskEither } from "okfp/taskEither";
+import { type TaskEither } from "@okfp/okfp/taskEither";
 
 // A plain Promise hides what can go wrong:
 async function unsafeFetch(url: string): Promise<User> { /* ... */ }

@@ -8,15 +8,15 @@ Install OKFP with your package manager of choice:
 
 ::: code-group
 ```sh [npm]
-$ npm install okfp
+$ npm install @okfp/okfp
 ```
 
 ```sh [pnpm]
-$ pnpm add okfp
+$ pnpm add @okfp/okfp
 ```
 
 ```sh [yarn]
-$ yarn add okfp
+$ yarn add @okfp/okfp
 ```
 :::
 
@@ -26,7 +26,7 @@ $ yarn add okfp
 The simplest way to start is with `Option`, which represents a value that may or may not exist.
 
 ```ts
-import { type Option, some, none } from "okfp/option";
+import { type Option, some, none } from "@okfp/okfp/option";
 
 type User = {
   id: string,
@@ -67,7 +67,7 @@ Instead of checking `if (user !== null)`, `Option` forces you to handle both cas
 When your operation can fail *with a reason*, use `Either`. It can be `Right` (success) or `Left` (error).
 
 ```ts
-import { type Either, right, left } from "okfp";
+import { type Either, right, left } from "@okfp/okfp";
 
 const parseAge = (input: string): Either<string, number> => {
   const age = Number(input);
