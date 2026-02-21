@@ -12,10 +12,4 @@ hero:
     - theme: alt
       text: View on GitHub
       link: https://github.com/pwlmc/okfp
-
-features:
-  - title: Option
-    details: Model the presence or absence of a value explicitly. Eliminate null, avoid hidden control flow, and compose safely.
-  - title: Either<E, T>
-    details: Typed error handling without exceptions. Make failure explicit and compose success and error paths predictably.
 ---
