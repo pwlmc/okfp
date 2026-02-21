@@ -27,7 +27,29 @@
   "author": "pwlmc",
   "type": "module",
   "main": "dist/",
+  "exports": {
+    "./either": {
+      "types": "./dist/either.d.mts",
+      "default": "./dist/either.mjs"
+    },
+    "./option": {
+      "types": "./dist/option.mts",
+      "default": "./dist/option.mjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "test": "vitest"
+    "test": "vitest",
+    "typecheck": "tsc --noEmit",
+    "build": "tsdown  --format esm --dts",
+    "dev": "tsdown --format esm --dts --watch"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^4.0.18",
+    "tsdown": "^0.20.3",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
   }
 }
