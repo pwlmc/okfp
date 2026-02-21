@@ -1,0 +1,33 @@
+{
+  "name": "okfp",
+  "version": "0.0.0",
+  "description": "Essential typed effects for TypeScript.",
+  "keywords": [
+    "typescript",
+    "fp",
+    "functional-programming",
+    "effects",
+    "algebraic-data-types",
+    "monads",
+    "option",
+    "either",
+    "validation",
+    "task",
+    "taskEither"
+  ],
+  "homepage": "https://github.com/pwlmc/okfp#readme",
+  "bugs": {
+    "url": "https://github.com/pwlmc/okfp/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pwlmc/okfp.git"
+  },
+  "license": "MIT",
+  "author": "pwlmc",
+  "type": "module",
+  "main": "dist/",
+  "scripts": {
+    "test": "vitest"
+  }
+}
