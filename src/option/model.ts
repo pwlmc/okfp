@@ -4,6 +4,6 @@ export type Some<T> = {
 
 export type None = symbol;
 
-export type OptionV<T> = Some<T> | None;
+export type OptionValue<T> = Some<T> | None;
 
 export const NONE = Symbol("None");

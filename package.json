@@ -33,8 +33,12 @@
       "default": "./dist/either.mjs"
     },
     "./option": {
-      "types": "./dist/option.mts",
+      "types": "./dist/option.d.mts",
       "default": "./dist/option.mjs"
+    },
+    "./validation": {
+      "types": "./dist/validation.d.mts",
+      "default": "./dist/validation.mjs"
     }
   },
   "files": [
