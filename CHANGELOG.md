@@ -6,12 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- `Validation<E, T>` applicative — accumulates errors across independent validations instead of short-circuiting on the first failure (unlike `Either`).
-  - Constructors: `valid`, `invalid`, `fromEither`, `fromOption`.
-  - Methods: `map`, `ap`, `zip`, `match`, `getOrElse`, `tap`, `tapInvalid`, `toResult`.
-  - Helpers: `map2`, `map3`, `sequence`.
-- `EitherResult<E, T>` type in `either/model`.
-- `ValidationResult<E, T>` type in `validation/model`.
+- `Validation<E, T>` applicative — accumulates errors across independent validations instead of short-circuiting on the first failure (unlike `Either`)
 
 ### Changed
 
