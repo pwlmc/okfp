@@ -5,6 +5,37 @@ import { invalid, valid } from "./constructors.js";
 import type { Validation } from "./validation.js";
 
 describe("validation", () => {
+	describe("filterOrElse", () => {
+		it("should return the same validation when predicate returns true", () => {
+			const v = valid<number, string>(5);
+			const result = v.filterOrElse(
+				(x) => x > 0,
+				() => "Must be positive",
+			);
+			expect(result).toBe(v);
+		});
+
+		it("should return invalid when predicate returns false", () => {
+			const v = valid<number, string>(-3);
+			const result = v.filterOrElse(
+				(x) => x > 0,
+				() => "Must be positive",
+			);
+			expect(result.toResult()).toEqual({
+				ok: false,
+				errors: ["Must be positive"],
+			});
+		});
+
+		it("should not call the predicate when invalid", () => {
+			const v = invalid<string, number>("error");
+			const predicate = vi.fn();
+			const result = v.filterOrElse(predicate, () => "other error");
+			expect(result).toBe(v);
+			expect(predicate).not.toHaveBeenCalled();
+		});
+	});
+
 	describe("map", () => {
 		const mapper = (n: number) => n + 2;
 

@@ -6,7 +6,7 @@ export type Invalid<E> = {
 	readonly invalid: readonly E[];
 };
 
-export type ValidationV<E, T> = Valid<T> | Invalid<E>;
+export type ValidationValue<E, T> = Valid<T> | Invalid<E>;
 
 export type ValidationResult<E, T> =
 	| { readonly ok: true; readonly value: T }

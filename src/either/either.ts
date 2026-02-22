@@ -1,6 +1,4 @@
-import type { EitherV, Left } from "./model.js";
-
-export type Result<E, T> = { ok: true; value: T } | { ok: false; error: E };
+import type { EitherResult, EitherValue, Left } from "./model.js";
 
 export type Either<E, T> = {
 	/**
@@ -211,10 +209,10 @@ export type Either<E, T> = {
 	 * console.log(errorResult.error); // "error"
 	 * ```
 	 */
-	toResult: () => Result<E, T>;
+	toResult: () => EitherResult<E, T>;
 };
 
-export function createEither<E, T>(value: EitherV<E, T>): Either<E, T> {
+export function createEither<E, T>(value: EitherValue<E, T>): Either<E, T> {
 	const either: Either<E, T> = {
 		filterOrElse: (predicate: (right: T) => boolean, onLeft: () => E) =>
 			either.flatMap((right) =>
@@ -284,7 +282,7 @@ export function createEither<E, T>(value: EitherV<E, T>): Either<E, T> {
 	return either;
 }
 
-function isLeft<E, T>(value: EitherV<E, T>): value is Left<E> {
+function isLeft<E, T>(value: EitherValue<E, T>): value is Left<E> {
 	return typeof value === "object" && "left" in value;
 }
 

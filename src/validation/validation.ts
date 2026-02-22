@@ -1,6 +1,28 @@
-import type { Valid, ValidationResult, ValidationV } from "./model.js";
+import type { Valid, ValidationResult, ValidationValue } from "./model.js";
 
 export type Validation<E, T> = {
+	/**
+	 * Filters the Valid value based on a predicate function.
+	 * If the predicate fails, returns Invalid with the provided error.
+	 * If this Validation is already Invalid, returns the same Invalid unchanged.
+	 *
+	 * @param predicate - Function that tests the valid value
+	 * @param onInvalid - Function that provides the error value when predicate fails
+	 * @returns The same Validation if Invalid or predicate passes, otherwise Invalid with the provided error
+	 *
+	 * @example
+	 * ```typescript
+	 * const isPositive = (n: number) => n > 0;
+	 * valid(5).filterOrElse(isPositive, () => "Must be positive")   // Valid(5)
+	 * valid(-3).filterOrElse(isPositive, () => "Must be positive")  // Invalid(["Must be positive"])
+	 * invalid("error").filterOrElse(isPositive, () => "Must be positive") // Invalid(["error"])
+	 * ```
+	 */
+	filterOrElse: (
+		predicate: (value: T) => boolean,
+		onInvalid: () => E,
+	) => Validation<E, T>;
+
 	/**
 	 * Transforms the valid value using a mapping function.
 	 * If this Validation is Invalid, returns the same Invalid unchanged.
@@ -29,6 +51,23 @@ export type Validation<E, T> = {
 		this: Validation<E, (a: A) => U>,
 		arg: Validation<EE, A>,
 	) => Validation<E | EE, U>;
+
+	/**
+	 * Combines this Validation with another Validation into a tuple.
+	 * If both are Valid, returns Valid containing a tuple of both values.
+	 * If either is Invalid, accumulates all errors.
+	 *
+	 * @param valA - The Validation to combine with this one
+	 * @returns Validation containing a tuple of both values, or accumulated errors
+	 *
+	 * @example
+	 * ```typescript
+	 * valid("Alice").zip(valid(30))          // Valid(["Alice", 30])
+	 * valid("Alice").zip(invalid("No age"))  // Invalid(["No age"])
+	 * invalid("e1").zip(invalid("e2"))       // Invalid(["e1", "e2"])
+	 * ```
+	 */
+	zip: <EE, A>(valA: Validation<EE, A>) => Validation<E | EE, readonly [T, A]>;
 
 	/**
 	 * Pattern matches on the Validation, executing different functions based on its state.
@@ -69,23 +108,6 @@ export type Validation<E, T> = {
 	tapInvalid: (sideEffect: (errors: readonly E[]) => void) => Validation<E, T>;
 
 	/**
-	 * Combines this Validation with another Validation into a tuple.
-	 * If both are Valid, returns Valid containing a tuple of both values.
-	 * If either is Invalid, accumulates all errors.
-	 *
-	 * @param valA - The Validation to combine with this one
-	 * @returns Validation containing a tuple of both values, or accumulated errors
-	 *
-	 * @example
-	 * ```typescript
-	 * valid("Alice").zip(valid(30))          // Valid(["Alice", 30])
-	 * valid("Alice").zip(invalid("No age"))  // Invalid(["No age"])
-	 * invalid("e1").zip(invalid("e2"))       // Invalid(["e1", "e2"])
-	 * ```
-	 */
-	zip: <EE, A>(valA: Validation<EE, A>) => Validation<E | EE, readonly [T, A]>;
-
-	/**
 	 * Converts the Validation to a ValidationResult type.
 	 *
 	 * @returns A ValidationResult object representing the Validation's state
@@ -100,9 +122,18 @@ export type Validation<E, T> = {
 };
 
 export function createValidation<E, T>(
-	value: ValidationV<E, T>,
+	value: ValidationValue<E, T>,
 ): Validation<E, T> {
 	const validation: Validation<E, T> = {
+		filterOrElse: (predicate: (value: T) => boolean, onInvalid: () => E) =>
+			validation.match(
+				() => validation,
+				(v) =>
+					predicate(v)
+						? validation
+						: createValidation<E, T>({ invalid: [onInvalid()] }),
+			),
+
 		map: <U>(mapper: (value: T) => U): Validation<E, U> =>
 			validation.match(
 				() => forceCast<E, T, E, U>(validation),
@@ -136,6 +167,9 @@ export function createValidation<E, T>(
 			);
 		},
 
+		zip: <EE, A>(valA: Validation<EE, A>) =>
+			validation.map((value) => (a: A) => [value, a] as const).ap(valA),
+
 		match: <U>(
 			onInvalid: (errors: readonly E[]) => U,
 			onValid: (value: T) => U,
@@ -157,9 +191,6 @@ export function createValidation<E, T>(
 			return validation;
 		},
 
-		zip: <EE, A>(valA: Validation<EE, A>) =>
-			validation.map((value) => (a: A) => [value, a] as const).ap(valA),
-
 		toResult: () =>
 			validation.match<ValidationResult<E, T>>(
 				(errors) => ({ ok: false, errors }),
@@ -170,7 +201,7 @@ export function createValidation<E, T>(
 	return validation;
 }
 
-function isValid<E, T>(value: ValidationV<E, T>): value is Valid<T> {
+function isValid<E, T>(value: ValidationValue<E, T>): value is Valid<T> {
 	return typeof value === "object" && "valid" in value;
 }
 

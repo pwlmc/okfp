@@ -1,4 +1,4 @@
-import { NONE, type OptionV, type Some } from "./model.js";
+import { NONE, type OptionValue, type Some } from "./model.js";
 
 export type Option<T> = {
 	/**
@@ -206,7 +206,7 @@ export type Option<T> = {
 	toArray: () => readonly T[];
 };
 
-export function createOption<T>(optionValue: OptionV<T>): Option<T> {
+export function createOption<T>(optionValue: OptionValue<T>): Option<T> {
 	const option: Option<T> = {
 		filter: (predicate) =>
 			option.flatMap((value) =>
@@ -275,7 +275,7 @@ export function createOption<T>(optionValue: OptionV<T>): Option<T> {
 	return option;
 }
 
-function isSome<T>(option: OptionV<T>): option is Some<T> {
+function isSome<T>(option: OptionValue<T>): option is Some<T> {
 	return typeof option === "object" && "some" in option;
 }
 
