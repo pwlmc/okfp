@@ -243,7 +243,7 @@ Combine two Options into a tuple. Returns None if either is None.
 
 ```ts
 some("Alice").zip(some(30)); // some(["Alice", 30])
-some("Alice").zip(none()); // sone
+some("Alice").zip(none()); // none
 ```
 
 ---
