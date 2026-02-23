@@ -3,17 +3,13 @@ import { defineConfig } from "vitepress";
 export default defineConfig({
 	base: "/ok-fp/",
 	title: "OK-FP",
-	description: "Essential typed effects for TypeScript.",
+	description: "Essential Effect Data Types for TypeScript",
 	themeConfig: {
-		nav: [
-			{ text: "Home", link: "/" },
-			{ text: "Guide", link: "/getting-started" },
-		],
 		sidebar: [
 			{
 				text: "Guide",
 				items: [
-					{ text: "Getting Started", link: "/getting-started" },
+					{ text: "Getting Started", link: "/" },
 					{ text: "Option", link: "/option" },
 					{ text: "Either", link: "/either" },
 					{ text: "Validation", link: "/validation" },

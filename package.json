@@ -1,7 +1,7 @@
 {
   "name": "ok-fp",
   "version": "0.0.1",
-  "description": "Essential typed effects for TypeScript.",
+  "description": "Essential Effect Data Types for TypeScript",
   "keywords": [
     "typescript",
     "fp",

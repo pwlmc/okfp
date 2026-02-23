@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/ok-fp?color=orange&label=npm) ![license](https://img.shields.io/badge/license-MIT-blue)
 
-> Essential typed effects for TypeScript.
+> Essential Effect Data Types for TypeScript
 
 OK-FP is a small, focused functional programming toolkit for TypeScript.
 
