@@ -60,7 +60,7 @@ const compute = (input: string): Option<number> =>
     .flatMap(reciprocal)
     .map((n) => n * 100);
 
-compute("4");   // Some(25)
+compute("4");   // Some(400)
 compute("0");   // None (fails positive)
 compute("-3");  // None (fails positive)
 compute("abc"); // None (fails parsing)
