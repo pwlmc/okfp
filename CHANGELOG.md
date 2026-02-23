@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Next]
 
+TBA
+
+## [0.2.0](https://github.com/pwlmc/okfp/compare/v0.0.1...v0.2.0) - 2026-02-23
+
 ### Added
 
 - `Validation<E, T>` applicative — accumulates errors across independent validations instead of short-circuiting on the first failure (unlike `Either`)

@@ -6,7 +6,7 @@
 - [x] (feat) Either
 - [x] (doc) Basic docs site
 - [ ] (doc) Document design decisions
-- [ ] (feat) Validation (applicative)
+- [x] (feat) Validation (applicative)
 - [ ] (feat) Task
 - [ ] (feat) TaskEither
 - [ ] (doc) Comprehensive FP effects guide
