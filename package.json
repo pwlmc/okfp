@@ -43,6 +43,10 @@
     "./task": {
       "types": "./dist/task.d.mts",
       "default": "./dist/task.mjs"
+    },
+    "./taskEither": {
+      "types": "./dist/taskEither.d.mts",
+      "default": "./dist/taskEither.mjs"
     }
   },
   "files": [

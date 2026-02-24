@@ -4,7 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Next]
 
-TBA
+### Added
+
+- `TaskEither<E, T>` — a lazy async computation that wraps `() => Promise<Either<E, T>>`, with `map`, `mapLeft`, `flatMap`, `flatten`, `ap`, `zip`, `tap`, `tapLeft`, `match`, `getOrElse`, `orElse`, and `run`
 
 ## [0.2.1](https://github.com/pwlmc/okfp/compare/v0.2.0...v0.2.1) - 2026-02-25
 
