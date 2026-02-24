@@ -138,3 +138,30 @@ Use `Validation` when you want to show users **all** their mistakes at once — 
 
 **Learn about `Validation`:** See the [Validation guide](./validation.md) for the full API and a detailed comparison with `Either`.
 
+## Async Computations: Task
+
+When you need to work with async operations, use `Task`. It represents a **lazy** computation that runs only when you call `.run()` — unlike Promises, which execute immediately.
+
+```ts
+import { task, fromPromise, all } from "ok-fp/task";
+
+const fetchUser = (id: string) =>
+  fromPromise(() => fetch(`/api/users/${id}`).then((r) => r.json() as Promise<{ name: string }>));
+
+// Build the pipeline without executing anything yet
+const greeting = fetchUser("a-001")
+  .map((user) => `Hello, ${user.name}!`);
+
+// Nothing has run until here:
+const message = await greeting.run(); // "Hello, Alice!"
+
+// Run multiple Tasks concurrently
+const [user1, user2] = await all([fetchUser("a-001"), fetchUser("b-002")]).run();
+```
+
+::: tip Key takeaway
+`Task` lets you describe and compose async operations before executing them. Chain steps with `.flatMap()`, transform results with `.map()`, and run concurrent work with `all()`.
+:::
+
+**Dive deeper into `Task`:** See the [Task guide](./task.md) for all available methods and patterns.
+
