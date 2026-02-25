@@ -8,14 +8,15 @@ OK-FP is a small, focused functional programming toolkit for TypeScript.
 
 It provides a minimal set of **typed effects**: composable, type-safe wrappers for optional values, errors, and async computations.
 
-## Status
+## Effects
 
-OK-FP is pre-1.0.
-
-- ✅ Implemented: `Option`, `Either`, `Validation`, `Task`
-- 🚧 Planned before `v1.0.0`: `TaskEither`
-
-See: [ROADMAP.md](./ROADMAP.md)
+| Effect | Description |
+|---|---|
+| [`Option<T>`](./docs/option.md) | A value that may or may not be present. Use instead of `null`/`undefined`. |
+| [`Either<E, T>`](./docs/either.md) | A computation that succeeds with `T` or fails with a typed error `E`. Errors are explicit and must be handled. |
+| [`Validation<E, T>`](./docs/validation.md) | Like `Either`, but accumulates **all** errors instead of stopping at the first one. Ideal for form and config validation. |
+| [`Task<T>`](./docs/task.md) | A lazy async computation that always succeeds. Executes only when `.run()` is called — unlike Promises, which are eager. |
+| [`TaskEither<E, T>`](./docs/task-either.md) | A lazy async computation that can succeed with `T` or fail with `E`. Combines `Task`'s laziness with `Either`'s typed errors. |
 
 ## Installation
 

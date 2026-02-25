@@ -180,3 +180,40 @@ const [user1, user2] = await all([
 :::
 
 **Dive deeper into `Task`:** See the [Task guide](./task.md) for all available methods and patterns.
+
+## Fallible Async Computations: TaskEither
+
+When your async operation can fail with a typed error, use `TaskEither`. It is a lazy `() => Promise<Either<E, T>>` — combining `Task`'s laziness with `Either`'s typed error handling.
+
+```ts
+import { tryCatch, taskEither, all } from "ok-fp/taskEither";
+
+type User = { id: string; name: string };
+
+const fetchUser = (id: string) =>
+  tryCatch(
+    () => fetch(`/api/users/${id}`).then((r) => r.json() as Promise<User>),
+    (err) => `Fetch failed: ${err}`,
+  );
+
+// Chain two async steps — short-circuits on first error
+const greeting = fetchUser("a-001")
+  .map((user) => `Hello, ${user.name}!`);
+
+const result = await greeting.run();
+result.match(
+  (err) => console.error(err),
+  (msg) => console.log(msg), // "Hello, Alice!"
+);
+
+// Run multiple requests concurrently
+const [user1, user2] = await all([fetchUser("a-001"), fetchUser("b-002")])
+  .getOrElse(() => [])
+  .run();
+```
+
+::: tip Key takeaway
+`TaskEither` makes the error type visible in the signature and forces you to handle it. Use it for any async operation that can fail — API requests, file reads, database queries.
+:::
+
+**Dive deeper into `TaskEither`:** See the [TaskEither guide](./task-either.md) for all available methods and patterns.

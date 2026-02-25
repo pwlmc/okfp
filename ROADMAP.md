@@ -8,5 +8,6 @@
 - [x] (feat) Validation (applicative)
 - [x] (feat) Task
 - [x] (feat) TaskEither
+- [x] (doc) TaskEither documentation
 - [ ] (doc) Document design decisions
 - [ ] (doc) Comprehensive FP effects guide
