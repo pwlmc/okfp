@@ -1,6 +1,9 @@
-# Getting Started
+<div style="text-align: center; padding: 2rem 0 6rem;">
+  <h1 style="font-size: 3rem; font-weight: 700; color: var(--vp-c-brand-1); margin: 0 0 0.75rem; line-height: 1.1;">OK-FP</h1>
+  <p style="font-size: 1.25rem; color: var(--vp-c-text-2); margin: 0;">Essential Effect Data Types for TypeScript</p>
+</div>
 
-> Essential Effect Data Types for TypeScript
+# Getting Started
 
 OK-FP is a small, focused functional programming toolkit for TypeScript. It provides composable, type-safe wrappers for optional values, errors, and async computations.
 
@@ -9,6 +12,7 @@ OK-FP is a small, focused functional programming toolkit for TypeScript. It prov
 Install OK-FP with your package manager of choice:
 
 ::: code-group
+
 ```sh [npm]
 $ npm install ok-fp
 ```
@@ -20,8 +24,8 @@ $ pnpm add ok-fp
 ```sh [yarn]
 $ yarn add ok-fp
 ```
-:::
 
+:::
 
 ## Your First Effect: Option
 
@@ -31,31 +35,34 @@ The simplest way to start is with `Option`, which represents a value that may or
 import { type Option, some, none } from "ok-fp/option";
 
 type User = {
-  id: string,
-  name: string
-}
+  id: string;
+  name: string;
+};
 
-const users: User[] = [{
-  id: "a-001",
-  name: "Alice"
-}, { 
-  id: "b-002",
-  name: "Bob" 
-}]
+const users: User[] = [
+  {
+    id: "a-001",
+    name: "Alice",
+  },
+  {
+    id: "b-002",
+    name: "Bob",
+  },
+];
 
 // A function that may not find a result
 const getUserName = (id: string): Option<string> => {
-  const user = users.find(u => u.id === id)
+  const user = users.find((u) => u.id === id);
   return user ? some(user.name) : none();
 };
 
 // Chain operations safely
-const greeting = getUserName('a-001')
+const greeting = getUserName("a-001")
   .map((name) => `Hello, ${name}!`)
   .getOrElse(() => "User not found");
 
 console.log(greeting); // "Hello, Alice!"
-console.log(getUserName('xxx').getOrElse(() => "User not found")); // "User not found"
+console.log(getUserName("xxx").getOrElse(() => "User not found")); // "User not found"
 ```
 
 ::: tip Key takeaway
@@ -66,7 +73,7 @@ Instead of checking `if (user !== null)`, `Option` forces you to handle both cas
 
 ## Handling Errors: Either
 
-When your operation can fail *with a reason*, use `Either`. It can be `Right` (success) or `Left` (error).
+When your operation can fail _with a reason_, use `Either`. It can be `Right` (success) or `Left` (error).
 
 ```ts
 import { type Either, right, left } from "ok-fp/either";
@@ -87,17 +94,18 @@ const result = parseAge("25")
   .map((age) => age + 1)
   .match(
     (error) => `Error: ${error}`,
-    (age) => `Next year you'll be ${age}`
+    (age) => `Next year you'll be ${age}`,
   );
 
 console.log(result); // "Next year you'll be 26"
 console.log(
   parseAge("abc").match(
     (error) => `Error: ${error}`,
-    (age) => `Age: ${age}`
-  )
+    (age) => `Age: ${age}`,
+  ),
 ); // "Error: Age must be a whole number"
 ```
+
 ::: tip Key takeaway
 `Either` gives you both the success value and error information, making it ideal for error recovery.
 :::
@@ -124,13 +132,13 @@ const result = map3(
   validateName(""),
   validateEmail("not-an-email"),
   validateAge(16),
-  (name, email, age) => ({ name, email, age })
+  (name, email, age) => ({ name, email, age }),
 );
 
 result.match(
   (errors) => console.error("Errors:", errors),
   // ["Name is required", "Invalid email address", "Must be at least 18"]
-  (user) => console.log("Created user:", user)
+  (user) => console.log("Created user:", user),
 );
 ```
 
@@ -139,3 +147,36 @@ Use `Validation` when you want to show users **all** their mistakes at once — 
 :::
 
 **Learn about `Validation`:** See the [Validation guide](./validation.md) for the full API and a detailed comparison with `Either`.
+
+## Async Computations: Task
+
+When you need to work with async operations, use `Task`. It represents a **lazy** computation that runs only when you call `.run()` — unlike Promises, which execute immediately.
+
+```ts
+import { task, fromPromise, all } from "ok-fp/task";
+
+const fetchUser = (id: string) =>
+  fromPromise(() =>
+    fetch(`/api/users/${id}`).then(
+      (r) => r.json() as Promise<{ name: string }>,
+    ),
+  );
+
+// Build the pipeline without executing anything yet
+const greeting = fetchUser("a-001").map((user) => `Hello, ${user.name}!`);
+
+// Nothing has run until here:
+const message = await greeting.run(); // "Hello, Alice!"
+
+// Run multiple Tasks concurrently
+const [user1, user2] = await all([
+  fetchUser("a-001"),
+  fetchUser("b-002"),
+]).run();
+```
+
+::: tip Key takeaway
+`Task` lets you describe and compose async operations before executing them. Chain steps with `.flatMap()`, transform results with `.map()`, and run concurrent work with `all()`.
+:::
+
+**Dive deeper into `Task`:** See the [Task guide](./task.md) for all available methods and patterns.
