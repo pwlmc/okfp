@@ -1,6 +1,9 @@
-# Getting Started
+<div style="text-align: center; padding: 3rem 0 2.5rem;">
+  <h1 style="font-size: 3rem; font-weight: 700; color: var(--vp-c-brand-1); margin: 0 0 0.75rem; line-height: 1.1;">OK-FP</h1>
+  <p style="font-size: 1.25rem; color: var(--vp-c-text-2); margin: 0;">Essential Effect Data Types for TypeScript</p>
+</div>
 
-> Essential Effect Data Types for TypeScript
+# Getting Started
 
 OK-FP is a small, focused functional programming toolkit for TypeScript. It provides composable, type-safe wrappers for optional values, errors, and async computations.
 
